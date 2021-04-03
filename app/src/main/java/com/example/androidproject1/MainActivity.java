@@ -1,11 +1,13 @@
 package com.example.androidproject1;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -127,5 +129,20 @@ public class MainActivity extends AppCompatActivity {
         }
         dayofweek++;
         return dayofweek%7+1;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final Calendar calendar = Calendar.getInstance();
+        final int day = calendar.get(Calendar.DAY_OF_WEEK);
+        final int month = calendar.get(Calendar.MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+        String result = "";
+        String day_full = year + "년 " + (month + 1) + "월 " + day + "일";
+        result += (day_full + "\n");
+        //토스트를 이용하여 메시지 호출
+        Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
+        return true;
+    }
+    private void clearSelectionsMenuClick() {
     }
 }
