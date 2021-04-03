@@ -1,8 +1,8 @@
 package com.example.androidproject1;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -13,7 +13,6 @@ import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.androidproject1.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             dayofweek = cal.get(Calendar.DAY_OF_WEEK); // 1=일요일 7=토요일
         }
         else {
-            switch (month) {
+            switch (month+1) {
                 case 2:
                     if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
                         lastday = 29;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 4:
                 case 6:
+                case 9:
                 case 11:
                     lastday = 30;
                     break;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn2=findViewById(R.id.Btn2);
         int finalYear = year;
         int finalMonth = month;
+        int finalDayofweek = dayofweek;
         btn1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -117,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         GridView gridview = (GridView) findViewById(R.id.gridview);
         // 어댑터를 GridView 객체에 연결
         gridview.setAdapter(adapt);
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this,finalYear+"."+(finalMonth+1)+"."+((int)id-finalDayofweek+2),Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
     public int getDayofWeek(int year,int month){
         int []end_day= new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -129,20 +137,5 @@ public class MainActivity extends AppCompatActivity {
         }
         dayofweek++;
         return dayofweek%7+1;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final Calendar calendar = Calendar.getInstance();
-        final int day = calendar.get(Calendar.DAY_OF_WEEK);
-        final int month = calendar.get(Calendar.MONTH);
-        final int year = calendar.get(Calendar.YEAR);
-        String result = "";
-        String day_full = year + "년 " + (month + 1) + "월 " + day + "일";
-        result += (day_full + "\n");
-        //토스트를 이용하여 메시지 호출
-        Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
-        return true;
-    }
-    private void clearSelectionsMenuClick() {
     }
 }
