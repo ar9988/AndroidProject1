@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
+
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
             year = cal.get(Calendar.YEAR);
             month = cal.get(Calendar.MONTH);
         }
+        TextView txt=findViewById(R.id.Text);
+        month+=1;
+        txt.setText(year+"년 "+month+"월");
+
         int lastday = cal.getActualMaximum(Calendar.DATE);
         cal.set(Calendar.DAY_OF_MONTH,1);
         int dayofweek = cal.get(Calendar.DAY_OF_WEEK); // 1=일요일 7=토요일
