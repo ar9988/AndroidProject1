@@ -14,7 +14,7 @@ import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MonthViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(MainActivity.this,MainActivity.class);
+                Intent intent1=new Intent(MonthViewActivity.this, MonthViewActivity.class);
                 if(finalMonth==0){
                     intent1.putExtra("year", finalYear-1);
                     intent1.putExtra("month", 11);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(MainActivity.this,MainActivity.class);
+                Intent intent1=new Intent(MonthViewActivity.this, MonthViewActivity.class);
                 if(finalMonth==11){
                     intent1.putExtra("year", finalYear+1);
                     intent1.putExtra("month", 0);
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this,finalYear+"."+(finalMonth+1)+"."+((int)id-finalDayofweek+2),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MonthViewActivity.this,finalYear+"."+(finalMonth+1)+"."+((int)id-finalDayofweek+2),Toast.LENGTH_SHORT).show();
             }
         });
 
