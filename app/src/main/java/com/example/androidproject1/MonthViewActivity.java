@@ -8,9 +8,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Calendar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -20,20 +18,23 @@ public class MonthViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Calendar cal=Calendar.getInstance();
         Intent intent = getIntent();
         int j=0;
         int year = intent.getIntExtra("year", -1);
         int month = intent.getIntExtra("month", -1);
         int dayofweek=intent.getIntExtra("dayofweek",-1);
         int lastday;
+        //intent에 전달된 값이 없을경우 calendar 클래스의 메소드를 통해 데이터를 가져온다
         if (year == -1 || month == -1) {
+            Calendar cal=Calendar.getInstance();
             year = cal.get(Calendar.YEAR);
             month = cal.get(Calendar.MONTH);
             lastday = cal.getActualMaximum(Calendar.DATE);
             cal.set(Calendar.DAY_OF_MONTH,1);
             dayofweek = cal.get(Calendar.DAY_OF_WEEK); // 1=일요일 7=토요일
         }
+        //intent를 통해 전달된 year,month 값이 있을 경우
+        // year와 month를 통해 해당 년도,월의 일수를 구하는 코드 출처:https://pekaholic.tistory.com/29
         else {
             switch (month+1) {
                 case 2:
@@ -58,6 +59,7 @@ public class MonthViewActivity extends AppCompatActivity {
         int finalYear = year;
         int finalMonth = month;
         int finalDayofweek = dayofweek;
+        //연,월 정보를 intent를 통해 전달하고 새로운 액티비티를 시작하는 코드 참고:https://whereisusb.tistory.com/4
         btn1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -100,7 +102,7 @@ public class MonthViewActivity extends AppCompatActivity {
         txt.setText(year+"년 "+month+"월");
         // 데이터 원본 준비
         String[] items = new String[lastday+dayofweek-1];
-
+        //해당 월의 시작 요일부터 데이터를 입력하기 위한 코드
         for(int i=1;i<dayofweek;i++){
             items[j]=" ";
             j++;
@@ -126,6 +128,7 @@ public class MonthViewActivity extends AppCompatActivity {
         });
 
     }
+    //입력된 year와 month로 해당하는 년,월의 첫 요일를 구하는 함수 출처:https://blog.naver.com/PostView.nhn?blogId=tipsware&logNo=221677127586
     public int getDayofWeek(int year,int month){
         int []end_day= new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
